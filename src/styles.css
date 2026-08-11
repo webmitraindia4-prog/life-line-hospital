@@ -1,0 +1,422 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-emerald: var(--emerald);
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.875rem;
+
+  /* Brand palette — navy trust + medical red + emerald */
+  --navy-deep: oklch(0.22 0.09 265);
+  --navy: oklch(0.29 0.11 265);
+  --brand: oklch(0.58 0.22 25);          /* medical red */
+  --brand-foreground: oklch(0.99 0 0);
+  --emerald: oklch(0.62 0.17 155);
+
+  --background: oklch(0.995 0.003 250);
+  --foreground: oklch(0.20 0.04 265);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.20 0.04 265);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.20 0.04 265);
+  --primary: var(--navy);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.01 250);
+  --secondary-foreground: var(--navy);
+  --muted: oklch(0.96 0.01 250);
+  --muted-foreground: oklch(0.5 0.03 260);
+  --accent: oklch(0.94 0.03 155);
+  --accent-foreground: var(--navy);
+  --destructive: var(--brand);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.92 0.01 255);
+  --input: oklch(0.92 0.01 255);
+  --ring: var(--brand);
+
+  --gradient-hero: linear-gradient(135deg, oklch(0.97 0.02 250) 0%, oklch(0.94 0.03 200) 100%);
+  --gradient-navy: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 55%, oklch(0.35 0.13 260) 100%);
+  --gradient-brand: linear-gradient(135deg, var(--brand) 0%, oklch(0.5 0.2 15) 100%);
+  --shadow-soft: 0 10px 40px -12px oklch(0.29 0.11 265 / 0.18);
+  --shadow-card: 0 4px 24px -8px oklch(0.29 0.11 265 / 0.12);
+  --shadow-glow: 0 0 60px -10px oklch(0.58 0.22 25 / 0.35);
+}
+
+.dark { color-scheme: dark; }
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  /* Make layout and media responsive by default */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body, #root { min-height: 100vh; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  img, picture, video, canvas, svg { max-width: 100%; height: auto; display: block; }
+  /* Simple responsive container used across components */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  /* Typographic scaling for better fit on small screens */
+  html { font-size: clamp(14px, 1.6vw, 16px); }
+  h1 { font-size: clamp(1.5rem, 4.4vw, 3rem); }
+  h2 { font-size: clamp(1.25rem, 3.4vw, 2rem); }
+  h3 { font-size: clamp(1.125rem, 2.6vw, 1.5rem); }
+
+  /* Prevent overflowing flex children */
+  :where(input, textarea, select, button) { min-width: 0; }
+  * { overflow-wrap: anywhere; }
+
+  /* Utility to ensure components fit their container */
+  .fit { width: 100%; max-width: 100%; }
+  /* On very small screens, allow elements with min-width utilities to shrink */
+  @media (max-width: 640px) {
+    [class*="min-w-"] { min-width: 0 !important; max-width: 100% !important; }
+    [class*="min-w\["] { min-width: 0 !important; }
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+}
+
+/* ===== Keyframes ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes ecg {
+  0% { stroke-dashoffset: 1000; }
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes count-glow {
+  0%, 100% { text-shadow: 0 0 0 transparent; }
+  50% { text-shadow: 0 0 24px oklch(0.58 0.22 25 / 0.4); }
+}
+
+/* ===== Utilities ===== */
+@utility bg-hero { background: var(--gradient-hero); }
+@utility bg-navy-gradient { background: var(--gradient-navy); }
+@utility bg-brand-gradient { background: var(--gradient-brand); }
+@utility bg-linear-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
+@utility shadow-soft { box-shadow: var(--shadow-soft); }
+@utility shadow-card { box-shadow: var(--shadow-card); }
+@utility shadow-glow { box-shadow: var(--shadow-glow); }
+
+@utility animate-float { animation: float 4s ease-in-out infinite; }
+@utility animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+@utility animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility animate-fade-in { animation: fade-in 0.6s ease-out both; }
+@utility animate-scale-in { animation: scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility animate-ecg { stroke-dasharray: 1000; animation: ecg 3s ease-in-out infinite; }
+@utility animate-marquee { animation: marquee 40s linear infinite; }
+@utility animate-count-glow { animation: count-glow 2.4s ease-in-out infinite; }
+
+@utility pulse-ring {
+  position: relative;
+  &::before, &::after {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: 9999px;
+    border: 2px solid var(--brand);
+    animation: pulse-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+  &::after { animation-delay: 1.2s; }
+}
+
+@utility card-lift {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 40px -18px oklch(0.29 0.11 265 / 0.28);
+    border-color: color-mix(in oklab, var(--brand) 40%, transparent);
+  }
+}
+
+/* Compact stat card used on dashboards */
+.stat-card {
+  border-radius: 1rem;
+  padding: 0.8rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.96));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-card);
+  border: 1px solid color-mix(in oklab, var(--navy) 6%, transparent);
+}
+
+.stat-card-sm { font-size: 0.78rem; padding: 0.6rem; }
+.stat-card-lg { font-size: 0.95rem; padding: 1.1rem; }
+
+.stat-title { color: var(--muted-foreground); font-weight: 700; letter-spacing: -0.01em; }
+.stat-value { font-weight: 800; font-size: 1.25rem; margin-top: 0.25rem; }
+
+.stat-icon { height: 44px; width: 44px; border-radius: 0.7rem; display:flex; align-items:center; justify-content:center; color: white; box-shadow: 0 6px 18px -8px oklch(0.29 0.11 265 / 0.12); }
+
+/* colorful presets */
+.tone-indigo { background: linear-gradient(135deg,#6366F1,#EC4899); }
+.tone-emerald { background: linear-gradient(135deg,#10B981,#06B6D4); }
+.tone-amber { background: linear-gradient(135deg,#F59E0B,#F97316); }
+.tone-rose { background: linear-gradient(135deg,#FB7185,#F43F5E); }
+
+/* Make tables and other lists more compact */
+.compact-table td, .compact-table th { padding: 0.5rem; font-size: 0.78rem; }
+
+/* Global table styling: smaller, compact, aligned */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  color: var(--color-foreground);
+  table-layout: auto;
+}
+
+table thead th {
+  font-size: 0.75rem;
+  text-transform: none;
+  color: var(--muted-foreground);
+  font-weight: 700;
+  text-align: left;
+  padding: 0.6rem 0.5rem;
+  vertical-align: middle;
+  background-color: color-mix(in oklab, var(--secondary) 9%, transparent);
+}
+
+table tbody td {
+  padding: 0.6rem 0.5rem;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* numeric columns often look better centered */
+table th.numeric, table td.numeric { text-align: center; }
+
+/* make tables responsive on very small screens */
+@media (max-width: 640px) {
+  table { font-size: 0.72rem; }
+  table thead th, table tbody td { padding: 0.45rem; }
+}
+
+
+/* Doctor card: visual polish for doctors grid */
+.doctor-card {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: var(--color-card);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.36s ease, box-shadow 0.36s ease;
+}
+.doctor-card.card-lift:hover {
+  transform: translateY(-10px);
+}
+.doctor-card .card-image {
+  height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.45s ease, filter 0.45s ease;
+  background-color: color-mix(in oklab, var(--secondary) 14%, white 86%);
+}
+.doctor-card .card-image:hover { transform: scale(1.03); filter: brightness(1.02); }
+.doctor-card .avatar {
+  height: 6.5rem; width: 6.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+.doctor-card .card-image img,
+.doctor-card .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.doctor-card .doctor-meta { padding: 0.85rem; text-align: center; display:flex; flex-direction:column; justify-content:space-between; gap:0.5rem; flex:1; }
+.doctor-card .doctor-name { font-weight: 700; color: var(--navy); font-size: 0.95rem; }
+.doctor-card .doctor-role { font-size: 0.78rem; color: var(--brand); margin-top: 0.25rem; }
+.doctor-card .doctor-experience { font-size: 0.78rem; color: var(--muted-foreground); margin-top: 0.25rem; }
+.doctor-card .book-btn { margin-top: 0.5rem; border-radius: 9999px; padding: 0.5rem 0.9rem; background: var(--secondary); color: var(--navy); font-weight: 600; box-shadow: 0 6px 18px -8px oklch(0.29 0.11 265 / 0.12); transition: transform 0.18s ease; }
+.doctor-card .book-btn:hover { transform: translateY(-3px); }
+
+@utility icon-pop {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+  .group:hover & { transform: scale(1.1) rotate(-6deg); }
+}
+
+@utility link-underline {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute; left: 0; bottom: -2px;
+    width: 100%; height: 2px;
+    background: var(--brand);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  &:hover::after { transform: scaleX(1); transform-origin: left; }
+}
+
+@utility shimmer-text {
+  background: linear-gradient(90deg, var(--navy) 0%, var(--brand) 45%, var(--navy) 90%);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ===== Banner effect keyframes ===== */
+@keyframes ken-burns {
+  0%   { transform: scale(1.05) translate(0, 0); }
+  50%  { transform: scale(1.2) translate(-3%, -2%); }
+  100% { transform: scale(1.05) translate(0, 0); }
+}
+@keyframes parallax-drift {
+  0%, 100% { transform: scale(1.12) translateY(0); }
+  50%      { transform: scale(1.18) translateY(-4%); }
+}
+@keyframes banner-slide {
+  0%   { transform: scale(1.18) translateX(-6%); }
+  100% { transform: scale(1.18) translateX(6%); }
+}
+@keyframes hue-sweep {
+  0%, 100% { filter: hue-rotate(0deg) saturate(1.1); }
+  50%      { filter: hue-rotate(25deg) saturate(1.4); }
+}
+@keyframes diagonal-shimmer {
+  0%   { transform: translateX(-120%) skewX(-18deg); }
+  100% { transform: translateX(220%)  skewX(-18deg); }
+}
+@keyframes slow-pan {
+  0%   { transform: scale(1.15) translateX(0); }
+  100% { transform: scale(1.15) translateX(-6%); }
+}
+@keyframes scanlines {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 40px; }
+}
+@keyframes spotlight {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 0.85; transform: scale(1.08); }
+}
+
+/* Banner variants — one distinct effect per page banner */
+@utility banner-ken-burns {
+  animation: ken-burns 10s ease-in-out infinite;
+  transform-origin: center;
+}
+@utility banner-parallax {
+  animation: parallax-drift 7s ease-in-out infinite, hue-sweep 9s ease-in-out infinite;
+}
+@utility banner-pan {
+  animation: slow-pan 12s ease-in-out infinite alternate;
+}
+@utility banner-tilt {
+  transform: scale(1.1);
+  animation: ken-burns 14s ease-in-out infinite;
+  filter: saturate(1.15) contrast(1.05);
+}
+@utility banner-slide {
+  animation: banner-slide 8s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+@utility overlay-shimmer {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute; top: -50%; bottom: -50%; left: 0; width: 40%;
+    background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.25), transparent);
+    animation: diagonal-shimmer 5.5s ease-in-out infinite;
+  }
+}
+@utility overlay-scanlines {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    oklch(1 0 0 / 0.06) 0px,
+    oklch(1 0 0 / 0.06) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mix-blend-mode: overlay;
+  animation: scanlines 3s linear infinite;
+}
+@utility overlay-spotlight {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at 50% 55%, oklch(1 0 0 / 0.25), transparent 55%);
+  animation: spotlight 6s ease-in-out infinite;
+}
