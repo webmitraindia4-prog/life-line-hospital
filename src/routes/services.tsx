@@ -10,7 +10,7 @@ import imgCardiology from "@/assets/service-cardiology.jpg";
 import imgPhysician from "@/assets/service-physician.jpg";
 import imgNeurology from "@/assets/service-neurology.jpg";
 import imgOrthopaedic from "@/assets/service-orthopaedic.jpg";
-import imgNephrology from "@/assets/service-nephrology.jpg";
+import imgNephrology from "@/assets/service-nephrology.png";
 import imgObgyn from "@/assets/service-obgyn.jpg";
 import imgEnt from "@/assets/service-ent.jpg";
 import imgPsychiatry from "@/assets/service-psychiatry.jpg";
@@ -22,7 +22,7 @@ import imgOncology from "@/assets/service-oncology.jpg";
 import imgGastro from "@/assets/service-gastro.jpg";
 import imgRetina from "@/assets/service-retina.jpg";
 import imgGlaucoma from "@/assets/service-glaucoma.jpg";
-import imgVascular from "@/assets/service-vascular.jpg";
+import imgVascular from "@/assets/service-vascular.png";
 
 export const Route = createFileRoute("/services")({
   head: () => ({

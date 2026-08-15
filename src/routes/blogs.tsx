@@ -42,9 +42,9 @@ function BlogsPage() {
               Discover tailored advice for patients and families looking for helpful information before their next visit.
             </p>
           </div>
-          <Link to="/admin/blog" className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-5 py-3 text-sm font-semibold text-white shadow-glow hover:translate-y-[-2px] transition-transform">
+          <a href="http://10.139.208.105:8080/admin/blog" className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-5 py-3 text-sm font-semibold text-white shadow-glow hover:translate-y-[-2px] transition-transform">
             <PenSquare className="h-4 w-4" /> Add Blog
-          </Link>
+          </a>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
