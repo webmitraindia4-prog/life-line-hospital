@@ -1,9 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+
 import { useEffect, useState } from "react";
 import { PageHero } from "@/components/site-chrome";
 import bannerServices from "@/assets/banner-services.jpg";
 import { ArrowRight, PenSquare } from "lucide-react";
 import { getPublishedBlogs, hydrateBlogs } from "@/lib/blogs";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/blogs")({
   head: () => ({
@@ -42,9 +43,13 @@ function BlogsPage() {
               Discover tailored advice for patients and families looking for helpful information before their next visit.
             </p>
           </div>
-          <a href="http://10.139.208.105:8080/admin/blog" className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-5 py-3 text-sm font-semibold text-white shadow-glow hover:translate-y-[-2px] transition-transform">
-            <PenSquare className="h-4 w-4" /> Add Blog
-          </a>
+          <Link
+  to="/admin/blog"
+  className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-5 py-3 text-sm font-semibold text-white shadow-glow hover:translate-y-[-2px] transition-transform"
+>
+  <PenSquare className="h-4 w-4" />
+  Add Blog
+</Link>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
